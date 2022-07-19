@@ -13,9 +13,10 @@ class UserSeeder extends Seeder
     {
          User::create
          ([
-            'name' => 'Curso de phph Laravel view',
+            'name' => 'Administrador Leon',
             'email' => 'ad@ad.com',
+            'status' => '1',
             'password' => bcrypt('123')
-         ]);
+         ])->assignRole('Administrador');
     }
 }

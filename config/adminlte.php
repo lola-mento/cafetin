@@ -228,8 +228,16 @@ return [
         ['header' => 'ADMINISTRACIÓN'],
         [
             'text' => 'Usuarios',
-            'url'  => 'admin/settings',
+            'route'  => 'administrador.users.index',
             'icon' => 'fas fa-fw fa-user',
+            'active' => ['administrador/users*'],
+            'can' => 'administrador.users.index'
+        ],
+        [
+            'text' => 'Roles',
+            'route'  => 'administrador.roles.index',
+            'icon' => 'fas fa-users fa-fw',
+            'active' => ['administrador/roles*']
         ],
         [
             'text' => 'Productos',
@@ -280,7 +288,7 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -296,6 +304,21 @@ return [
                     'type' => 'css',
                     'asset' => false,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
+                ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/responsive/2.3.0/css/responsive.bootstrap4.min.css',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/responsive/2.3.0/js/dataTables.responsive.min.js',
+                ],
+                [
+                    'type' => 'js',
+                    'asset' => false,
+                    'location' => '//cdn.datatables.net/responsive/2.3.0/js/responsive.bootstrap4.min.js',
                 ],
             ],
         ],
