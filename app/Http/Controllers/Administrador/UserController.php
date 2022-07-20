@@ -4,11 +4,13 @@ namespace App\Http\Controllers\Administrador;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserStoreRequest;
+use App\Models\Employee;
 use App\Models\Product;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -26,7 +28,10 @@ class UserController extends Controller
 
 public function create()
     {
-        return view('administrador.users.create');
+        //$employees =  Employee::pluck('full_name','id');
+        $employees = Employee::all();
+        $listaRoles = Role::pluck('name','id');
+        return view('administrador.users.create',compact('listaRoles','employees'));
     }
 
 
@@ -34,20 +39,23 @@ public function create()
     {
         try
         {
-
-            User::create([
-                'name' => $request->name,
+            $result = Employee::find($request->employee);
+            //dd($request->employee);
+            $user = User::create([
+                'name' => $result->name.' '.$result->lastname,
                 'email' => $request->email,
                 'status' => '1',
                 'password' => bcrypt($request->password),
+                'employee_id' => $request->employee
             ]);
+            $user->roles()->sync($request->roles);
             Alert::toast('usuario guardado exitosamente', 'success');
             return redirect()->route('administrador.users.index');
 
         }
         catch(Exception $e)
         {
-            return "ha ocurrido un error";
+            return "ha ocurrido un error". $e;
         }
     }
 
@@ -60,7 +68,10 @@ public function create()
 
     public function edit(User $user)
     {
-        return view('administrador.users.edit',compact('user'));
+        //$employees = Employee::pluck('full_name','id');
+        $employees = Employee::all();
+        $listaRoles = Role::pluck('name','id');
+        return view('administrador.users.edit',compact('user','listaRoles','employees'));
     }
 
 
@@ -80,8 +91,10 @@ public function create()
                 'name' => $request->name,
                 'email' => $request->email,
                 'status' => $user->status,
-                'password'=> $password
+                'password'=> $password,
+                'employee_id' => $request->employee,
             ]);
+            $user->roles()->sync($request->roles);
             Alert::toast('usuario editado exitosamente', 'success');
             return redirect()->route('administrador.users.index');
 

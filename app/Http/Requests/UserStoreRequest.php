@@ -16,7 +16,6 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
             'email' => 'required',
             'password' => 'required',
         ];
@@ -26,7 +25,6 @@ class UserStoreRequest extends FormRequest
     {
         return
         [
-            'name.required' => 'Debe indicar un nombre',
             'email.required' => 'Debe indicar un email',
             'password.required' => 'Debe indicar una clave'
         ];
