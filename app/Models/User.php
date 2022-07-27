@@ -10,6 +10,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class User extends Authenticatable
 {
@@ -21,11 +24,7 @@ class User extends Authenticatable
     use HasRoles;
 
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var string[]
-     */
+
     protected $fillable = [
         'name',
         'email',
@@ -34,11 +33,7 @@ class User extends Authenticatable
         'employee_id',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array
-     */
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -46,21 +41,22 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
+
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
+
     protected $appends = [
         'profile_photo_url',
     ];
+    //RELACION DE UNO A UNO CON EMPLEADO
+    public function employee()
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+
+
+
 }

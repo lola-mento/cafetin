@@ -17,7 +17,10 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('can:administrador.users.index');
+        $this->middleware('can:administrador.users.index')->only('index');
+        $this->middleware('can:administrador.users.create')->only('create','store');
+        $this->middleware('can:administrador.users.edit')->only('edit','update');
+        $this->middleware('can:administrador.users.destroy')->only('destroy');
     }
 
     public function index()
@@ -52,6 +55,8 @@ public function create()
             Alert::toast('usuario guardado exitosamente', 'success');
             return redirect()->route('administrador.users.index');
 
+
+
         }
         catch(Exception $e)
         {
@@ -68,10 +73,9 @@ public function create()
 
     public function edit(User $user)
     {
-        //$employees = Employee::pluck('full_name','id');
-        $employees = Employee::all();
+        $employee = Employee::find($user->employee_id);
         $listaRoles = Role::pluck('name','id');
-        return view('administrador.users.edit',compact('user','listaRoles','employees'));
+        return view('administrador.users.edit',compact('user','listaRoles','employee'));
     }
 
 
@@ -88,11 +92,9 @@ public function create()
                 $password = bcrypt($request->password);
             }
             $user->update([
-                'name' => $request->name,
                 'email' => $request->email,
                 'status' => $user->status,
-                'password'=> $password,
-                'employee_id' => $request->employee,
+                'password'=> $password
             ]);
             $user->roles()->sync($request->roles);
             Alert::toast('usuario editado exitosamente', 'success');

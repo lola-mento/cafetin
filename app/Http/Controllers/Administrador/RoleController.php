@@ -30,6 +30,10 @@ class RoleController extends Controller
         $rol->permissions()->sync($request->permissions);
         Alert::toast('Rol guardado correctamente','success');
         return redirect()->route('administrador.roles.index');
+
+
+        
+
     }
 
 

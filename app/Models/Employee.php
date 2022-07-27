@@ -17,10 +17,19 @@ class Employee extends Model
         'salary',
     ];
 
-    /* public function getFullNameAttribute()
+    public function getFullNameAttribute()
     {
         return "{$this->name} {$this->lastname}";
-    } */
+    }
+
+    //RELACION DE UNO A UNO CON USUARIO
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 
 
 }
+
+
+

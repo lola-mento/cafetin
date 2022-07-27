@@ -5,6 +5,7 @@
 @section('content_header')
 @can('administrador.users.create')
     <a class="btn btn-secondary btn-sm float-right" href="{{route('administrador.users.create')}}">Crear usuario</a>
+
 @endcan
 <h3>Gestion de usuarios</h3>
 @stop
@@ -18,6 +19,7 @@
                 <tr>
                     <th>Nombre</th>
                     <th>Correo</th>
+                    <th>Rol</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -27,12 +29,23 @@
                     <tr>
                         <td>{{$user->name}}</td>
                         <td>{{$user->email}}</td>
-                        <td width="10px"><a href="{{route('administrador.users.edit',$user)}}" class="btn btn-primary btn-sm">Editar</a></td>
+                        @if (!empty($user->getRoleNames()))
+                            @foreach ($user->getRoleNames() as $roleName)
+                                <td>{{$roleName}}</td>
+                            @endforeach
+                        @endif
+                        <td width="10px">
+                            @can('administrador.users.edit')
+                            <a href="{{route('administrador.users.edit',$user)}}" class="btn btn-primary btn-sm">Editar</a>
+                            @endcan
+                        </td>
                         <td width="10px">
                             <form action="{{route('administrador.users.destroy',$user)}}" method="POST">
                                 @csrf
                                 @method('delete')
+                                @can('administrador.users.destroy')
                                 <button class="btn btn-danger btn-sm" type="submit">Eliminar</button>
+                                @endcan
                             </form>
                         </td>
                     </tr>
