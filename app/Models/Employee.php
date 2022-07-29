@@ -22,12 +22,19 @@ class Employee extends Model
         return "{$this->name} {$this->lastname}";
     }
 
-    //RELACION DE UNO A UNO CON USUARIO
+    /* //RELACION DE UNO A UNO CON USUARIO
     public function user()
     {
         return $this->hasOne(User::class);
     }
+ */
 
+ //RELACION DE UN0 A MUCHOS
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 
 }
 

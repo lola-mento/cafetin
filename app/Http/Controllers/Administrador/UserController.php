@@ -26,6 +26,15 @@ class UserController extends Controller
     public function index()
     {
         $users = User::where('status','1')->get();
+
+       /*  $employees = Employee::all(); */
+        /* dd($employees->users); */
+
+        /* foreach ($employees as $employee)
+        {
+           echo $employee->name." ".$employee->lastname." ".$employee->salary." ".$employee->user->email.'<br>';
+        } */
+        
         return view('administrador.users.index', compact('users'));
     }
 

@@ -39,7 +39,7 @@
         </div>
         El salario por día de este empleado es: <br>
         $ {{ number_format($salary_per_day) }}<br><br>
-        <a class="btn btn-primary btn-sm">Crear empleado</a>
+        <a class="btn btn-primary btn-sm" wire:click="store()">Crear empleado</a>
         </div>
     </div>
 </div>

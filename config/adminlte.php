@@ -234,6 +234,12 @@ return [
             'can' => 'administrador.users.index'
         ],
         [
+            'text' => 'Empleados',
+            'route'  => 'administrador.employees.index',
+            'icon' => 'fas fa-fw fa-user',
+            'active' => ['administrador/employees*'],
+        ],
+        [
             'text' => 'Roles',
             'route'  => 'administrador.roles.index',
             'icon' => 'fas fa-users fa-fw',
